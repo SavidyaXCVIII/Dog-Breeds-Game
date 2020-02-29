@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Dog Breeds</string>
+    <string name="app_name">Game of Dogs</string>
+    <string name="welcome_message">Welcome!</string>
+    <string name="identify_the_breed">Identify the breed</string>
+    <string name="identify_the_dog">Identify the dog</string>
+    <string name="search_dog_breeds">Search dog breed</string>
+    <string name="difficulty_level">Change Difficulty </string>
+    <string name="show_difficulty_description">You have chosen Beginner Level</string>
 </resources>

@@ -26,7 +26,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
         android:text="@string/identify_the_breed"
-
+        android:onClick="launchIdentifyBreedActivity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcome_message" />
 
@@ -38,6 +38,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/identify_the_dog"
+        android:onClick="launchIdentifyDogActivity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/level_identify_the_breed" />
 
@@ -49,6 +50,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
         android:text="@string/search_dog_breeds"
+        android:onClick="launchSearchBreedsActivity"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/level_identify_the_dog" />
 

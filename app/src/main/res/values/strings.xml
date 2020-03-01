@@ -6,4 +6,22 @@
     <string name="search_dog_breeds">Search dog breed</string>
     <string name="difficulty_level">Change Difficulty </string>
     <string name="show_difficulty_description">You have chosen Beginner Level</string>
+    <string name="level_one_description">Identify the Breed</string>
+    <string name="select_breed">Select the breed of the dog shown in the image below.</string>
+    <string name="submit">Submit</string>
+    <string name="result"></string>
+    <string-array name="dog_names_array">
+        <item>Bull Mastiff</item>
+        <item>Doberman</item>
+        <item>Eskimo</item>
+        <item>German Shepard</item>
+        <item>Golden Retriever</item>
+        <item>Siberian Husky</item>
+        <item>Komondor</item>
+        <item>Labrador Retriever</item>
+        <item>Bull Rottweiler</item>
+        <item>Saint</item>
+
+    </string-array>
+
 </resources>

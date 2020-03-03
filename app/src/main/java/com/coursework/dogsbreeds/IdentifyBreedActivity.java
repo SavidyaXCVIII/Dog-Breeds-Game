@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,7 +34,13 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
     private static String spinnerLabel;
 
+    private static String button = "Submit";
+
+    private static int clickCount = 0;
+
     private TextView answer;
+    private TextView correctAnswer;
+    private Button submitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +48,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         setContentView(R.layout.activity_identify_breed);
 
         Intent intent = getIntent();
+
+        breedName = intent.getExtras().getString("breed");
 
         imagesMap = (HashMap<String, String[]>) intent.getSerializableExtra("Images");
 
@@ -67,6 +76,9 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         }
 
         answer = (TextView)findViewById(R.id.result);
+        correctAnswer = (TextView)findViewById((R.id.result_correct_answer));
+        submitButton = (Button)findViewById(R.id.submit_button);
+
     }
 
     public String getImageName() {
@@ -97,19 +109,37 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
     }
 
+    public void restartActivity(){
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
+
     public void checkAnswer(View view) {
 
-        String answerDescription;
-        if (spinnerLabel.equals(breedName)) {
-            answerDescription = "Your answer is CORRECT!";
-            answer.setTextColor(this.getResources().getColor(R.color.ColorGreen));
+        if (button.equals("Submit")) {
+            button = "Next";
+            submitButton.setText(button);
+            String answerDescription;
+            if (spinnerLabel.equals(breedName)) {
+                answerDescription = "Your answer is CORRECT!";
+                answer.setTextColor(this.getResources().getColor(R.color.ColorGreen));
+            }
+            else {
+                answerDescription = "Your answer is WRONG";
+                answer.setTextColor(this.getResources().getColor(R.color.ColorRed));
+                correctAnswer.setTextColor(this.getResources().getColor(R.color.colorBlue));
+                correctAnswer.setText("Answer: " + breedName);
+            }
+
+            answer.setText(answerDescription);
         }
         else {
-            answerDescription = "Your answer is WRONG";
-            answer.setTextColor(this.getResources().getColor(R.color.ColorRed));
+            if (button.equals("Next")) {
+                submitButton.setText(button);
+                restartActivity();
+                button = "Submit";
+            }
         }
-
-        answer.setText(answerDescription);
-
     }
 }

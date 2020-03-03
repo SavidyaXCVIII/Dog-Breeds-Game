@@ -1,5 +1,6 @@
 package com.coursework.dogsbreeds;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -35,6 +36,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     private static String spinnerLabel;
 
     private static String button = "Submit";
+
+    private static String answerDescription;
 
     private static int clickCount = 0;
 
@@ -82,7 +85,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     }
 
     public String getImageName() {
-        String imageName = null;
+//        String imageName = null;
         Random random = new Random();
 
         int randKey = random.nextInt(10);
@@ -120,7 +123,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         if (button.equals("Submit")) {
             button = "Next";
             submitButton.setText(button);
-            String answerDescription;
+
             if (spinnerLabel.equals(breedName)) {
                 answerDescription = "Your answer is CORRECT!";
                 answer.setTextColor(this.getResources().getColor(R.color.ColorGreen));
@@ -141,5 +144,40 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
                 button = "Submit";
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("image", imageName);
+        outState.putString("breed", breedName);
+        outState.putString("submit", button);
+        outState.putString("description", answerDescription);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        imageName = savedInstanceState.getString("image", imageName);
+        breedName = savedInstanceState.getString("breed", breedName);
+        ImageView breedImage = findViewById(R.id.breed_image);
+        int resource_id = getResources().getIdentifier(imageName, "drawable", "com.coursework.dogsbreeds");
+        breedImage.setImageResource(resource_id);
+        button = savedInstanceState.getString("submit", button);
+        answerDescription = savedInstanceState.getString("description", answerDescription);
+        if (button.equals("Next")){
+            submitButton.setText(button);
+            if (answerDescription.equals("Your answer is CORRECT!")){
+                answer.setTextColor(this.getResources().getColor(R.color.ColorGreen));
+                answer.setText(answerDescription);
+            }
+            else {
+                answer.setText(answerDescription);
+                answer.setTextColor(this.getResources().getColor(R.color.ColorRed));
+                correctAnswer.setTextColor(this.getResources().getColor(R.color.colorBlue));
+                correctAnswer.setText("Answer: " + breedName);
+            }
+        }
+
     }
 }

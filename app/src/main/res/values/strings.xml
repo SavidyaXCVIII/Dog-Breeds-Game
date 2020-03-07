@@ -10,6 +10,11 @@
     <string name="select_breed">Select the breed of the dog shown in the image below.</string>
     <string name="submit">Submit</string>
     <string name="result"></string>
+
+    <string name="identify_dogs_header">Identify Dogs Breed </string>
+    <string name="identify_dogs_description">Click the image of the corresponding Breed</string>
+    <string name="breed_name">Golden Retriever</string>
+    <string name="dog_result">dog_result</string>
     <string-array name="dog_names_array">
         <item>Bull Mastiff</item>
         <item>Doberman</item>
@@ -21,7 +26,6 @@
         <item>Labrador Retriever</item>
         <item>Bull Rottweiler</item>
         <item>Saint</item>
-
     </string-array>
 
 </resources>

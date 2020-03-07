@@ -8,10 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,7 +20,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static HashMap<String, String[]> imagesMap = new HashMap<>();
 
-    public void addImages(){
+    private static boolean gameDifficulty = false;
+
+    public void addImages() {
         String[] bullMastiff = new String[]{"bull1", "bull2", "bull3", "bull4", "bull5"};
         String[] doberman = new String[]{"doberman1", "doberman2", "doberman3", "doberman4", "doberman5"};
         String[] eskimo = new String[]{"eskimo1", "eskimo2", "eskimo3", "eskimo4", "eskimo5"};
@@ -53,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 //        get difficulty text view
-        difficulty = (TextView)findViewById(R.id.difficulty_description);
+        difficulty = (TextView) findViewById(R.id.difficulty_description);
 
         addImages();
     }
@@ -63,10 +62,15 @@ public class MainActivity extends AppCompatActivity {
 //        adding a log message
         Log.d(LOG_TAG, "Button Clicked (Changed Difficulty)");
 
-        if (difficulty_level.equals("You have chosen Beginner Level")){
+
+//        adding an if else to change the difficulty value
+        if (difficulty_level.equals("You have chosen Beginner Level")) {
             difficulty_level = "You have chosen Intermediate Level";
-        }else {
+//        setting boolean value true if the difficulty is intermediate
+            gameDifficulty = true;
+        } else {
             difficulty_level = "You have chosen Beginner Level";
+            gameDifficulty = false;
         }
 //        set message
         difficulty.setText(difficulty_level);
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     public void launchIdentifyBreedActivity(View view) {
         Log.d(LOG_TAG, "Button Clicked");
 
-        Intent intent = new Intent(this, IdentifyBreedActivity.class );
+        Intent intent = new Intent(this, IdentifyBreedActivity.class);
         intent.putExtra("Images", imagesMap);
         startActivity(intent);
 
@@ -84,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     public void launchIdentifyDogActivity(View view) {
         Log.d(LOG_TAG, "Button Clicked");
 
-        Intent intent = new Intent(this, IdentifyDogsActivity.class );
+        Intent intent = new Intent(this, IdentifyDogsActivity.class);
         intent.putExtra("Images", imagesMap);
         startActivity(intent);
 
@@ -94,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "Button Clicked");
         Intent intent = new Intent(this, SearchDogBreedsActivity.class);
         intent.putExtra("Images", imagesMap);
+        intent.putExtra("gameDifficulty" , gameDifficulty);
         startActivity(intent);
 
     }

@@ -39,7 +39,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
     private static String answerDescription;
 
-    private static int clickCount = 0;
+    private static boolean gameDifficulty;
 
     private TextView answer;
     private TextView correctAnswer;
@@ -53,6 +53,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         Intent intent = getIntent();
 
         breedName = intent.getExtras().getString("breed");
+
+        gameDifficulty = intent.getExtras().getBoolean("gameDifficulty");
 
         imagesMap = (HashMap<String, String[]>) intent.getSerializableExtra("Images");
 
@@ -93,7 +95,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         Set<String> keys = imagesMap.keySet();
         String[] breedNamesArray = keys.toArray(new String[keys.size()]);
         breedName = breedNamesArray[randKey];
-        String[] imageNamesArray = imagesMap.get(breedNamesArray[randKey]);
+        String[] imageNamesArray = imagesMap.get(breedNamesArray[2]);
         int randValue = random.nextInt(5);
         imageName = imageNamesArray[randValue];
         System.out.println(imageName);
@@ -160,11 +162,14 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         super.onRestoreInstanceState(savedInstanceState);
         imageName = savedInstanceState.getString("image", imageName);
         breedName = savedInstanceState.getString("breed", breedName);
+
         ImageView breedImage = findViewById(R.id.breed_image);
         int resource_id = getResources().getIdentifier(imageName, "drawable", "com.coursework.dogsbreeds");
         breedImage.setImageResource(resource_id);
+
         button = savedInstanceState.getString("submit", button);
         answerDescription = savedInstanceState.getString("description", answerDescription);
+
         if (button.equals("Next")){
             submitButton.setText(button);
             if (answerDescription.equals("Your answer is CORRECT!")){

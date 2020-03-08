@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
@@ -17,16 +16,21 @@ public class IdentifyDogsActivity extends AppCompatActivity {
 
     private static HashMap<String, String[]> imagesMap;
 
-
     private static Random random = new Random();
 
     private static String breedName;
+    private static String breedNameOne;
+    private static String breedNameTwo;
+    private static String breedNameThree;
     private static String imageNameOne;
     private static String imageNameTwo;
     private static String imageNameThree;
-    private static String bredNameText;
+    private ImageView imageViewOne;
+    private ImageView imageViewTwo;
+    private ImageView imageViewThree;
+    private static String selectedImage;
     private TextView breed;
-
+    private TextView result;
 
 
     @Override
@@ -39,8 +43,11 @@ public class IdentifyDogsActivity extends AppCompatActivity {
 
         setImages();
 
-        breed = (TextView)findViewById(R.id.breed_name);
+        breed = (TextView) findViewById(R.id.breed_name);
         breed.setText(breedName);
+
+        result = (TextView) findViewById(R.id.result);
+
 
         ImageView breedImageOne = findViewById(R.id.breed_image_1);
         int resource_id_one = getResources().getIdentifier(imageNameOne, "drawable", "com.coursework.dogsbreeds");
@@ -56,25 +63,25 @@ public class IdentifyDogsActivity extends AppCompatActivity {
 
     }
 
-    public void setImages(){
+    public void setImages() {
         Set<Integer> randomSet = new HashSet<>();
 
-        while (randomSet.size() < 3){
+        while (randomSet.size() < 3) {
             int randomKey = random.nextInt(10);
             randomSet.add(randomKey);
         }
-        Integer[] randomValues = randomSet.toArray(new Integer[randomSet.size()]);
 
+        Integer[] randomValues = randomSet.toArray(new Integer[randomSet.size()]);
 
         Set<String> keys = imagesMap.keySet();
         String[] breedNamesArray = keys.toArray(new String[keys.size()]);
 
-        String[] breedArray = new String[]{breedNamesArray[randomValues[0]],breedNamesArray[randomValues[1]],breedNamesArray[randomValues[2]]};
+        String[] breedArray = new String[]{breedNamesArray[randomValues[0]], breedNamesArray[randomValues[1]], breedNamesArray[randomValues[2]]};
 
         breedName = breedArray[random.nextInt(3)];
-        System.out.println(breedNamesArray[randomValues[0]]);
-        System.out.println(breedNamesArray[randomValues[1]]);
-        System.out.println(breedNamesArray[randomValues[2]]);
+        breedNameOne = breedArray[0];
+        breedNameTwo = breedArray[1];
+        breedNameThree = breedArray[2];
 
         String[] imageNamesArrayOne = imagesMap.get(breedNamesArray[randomValues[0]]);
         imageNameOne = getImage(imageNamesArrayOne);
@@ -90,17 +97,52 @@ public class IdentifyDogsActivity extends AppCompatActivity {
 
     }
 
-    public String getImage(String[] imagesArray){
+    public String getImage(String[] imagesArray) {
         String imageName = null;
 
         int randValueOne = random.nextInt(5);
         imageName = imagesArray[randValueOne];
-        imagesArray[randValueOne] = null;
-        imagesMap.put(breedName, imagesArray);
-        if (imageName == null){
-            return getImage(imagesArray);
-        }
         return imageName;
+    }
+
+    public void checkAnswer(){
+        String resultDescription = null;
+        if (selectedImage.equals(breedName)){
+            resultDescription = "CORRECT";
+            result.setText(resultDescription);
+        }
+        else{
+            resultDescription = "WRONG";
+            result.setText(resultDescription);
+        }
+    }
+
+
+    public void checkImageOne(View view) {
+        selectedImage = breedNameOne;
+        disableImageClick();
+        checkAnswer();
+    }
+
+    public void checkImageTwo(View view) {
+        selectedImage = breedNameTwo;
+        disableImageClick();
+        checkAnswer();
+    }
+
+    public void checkImageThree(View view) {
+        selectedImage = breedNameThree;
+        disableImageClick();
+        checkAnswer();
+    }
+
+    public void disableImageClick(){
+        ImageView breedImageOne = findViewById(R.id.breed_image_1);
+        breedImageOne.setEnabled(false);
+        ImageView breedImageTwo = findViewById(R.id.breed_image_2);
+        breedImageTwo.setEnabled(false);
+        ImageView breedImageThree = findViewById(R.id.breed_image_3);
+        breedImageThree.setEnabled(false);
     }
 
     public void next(View view) {
@@ -108,54 +150,9 @@ public class IdentifyDogsActivity extends AppCompatActivity {
     }
 
     public void restartActivity(){
-        Intent intent = new Intent();
+        Intent identifyDogsBreedActivity = new Intent(this, IdentifyDogsActivity.class);
         finish();
-        startActivity(intent);
+        identifyDogsBreedActivity.putExtra("Images",imagesMap);
+        startActivity(identifyDogsBreedActivity);
     }
-
-//    public String getImageNameTwo(){
-//        Random random = new Random();
-//        int randKey1 = random.nextInt((6-3) + 1) + 3  ;
-//        Set<String> keys = imagesMap.keySet();
-//        String[] breedNamesArray = keys.toArray(new String[keys.size()]);
-//        breedNameTwo = breedNamesArray[randKey1];
-//
-//        String[] imageNamesArrayOne = imagesMap.get(breedNamesArray[randKey1]);
-//
-//        int randValueOne = random.nextInt(5);
-//        if (imageNamesArrayOne[randValueOne] == null){
-//            getImageNameTwo();
-//        }
-//        imageNameTwo = imageNamesArrayOne[randValueOne];
-//        imageNamesArrayOne[randValueOne] = null;
-//        imagesMap.put(breedNameTwo, imageNamesArrayOne);
-//        return imageNameTwo;
-//    }
-//    public String getImageNameThree(){
-//        Random random = new Random();
-//        int randKey1 = random.nextInt((10-6) + 1) + 6  ;
-//        Set<String> keys = imagesMap.keySet();
-//        String[] breedNamesArray = keys.toArray(new String[keys.size()]);
-//        breedNameThree = breedNamesArray[randKey1];
-//
-//        String[] imageNamesArrayOne = imagesMap.get(breedNamesArray[randKey1]);
-//
-//        int randValueOne = random.nextInt(5);
-//        if (imageNamesArrayOne[randValueOne] == null){
-//            getImageNameThree();
-//        }
-//        imageNameThree = imageNamesArrayOne[randValueOne];
-//        imageNamesArrayOne[randValueOne] = null;
-//        imagesMap.put(breedNameThree, imageNamesArrayOne);
-//        return imageNameThree;
-//    }
-//     public String setRandomBreedName(){
-//        String[] breedsArray = new String[]{breedNameOne, breedNameTwo, breedNameThree};
-//        Random random =  new Random();
-//        int rand = random.nextInt(3);
-//        breedNameText =
-//     }
-
-
-
 }

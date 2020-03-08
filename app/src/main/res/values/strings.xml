@@ -14,7 +14,11 @@
     <string name="identify_dogs_header">Identify Dogs Breed </string>
     <string name="identify_dogs_description">Click the image of the corresponding Breed</string>
     <string name="breed_name">Golden Retriever</string>
-    <string name="dog_result">dog_result</string>
+    <string name="dog_result"></string>
+    <string name="search">Search a Breed</string>
+    <string name="breeds">Breeds</string>
+    <string name="text_submit">Submit</string>
+    <string name="text_stop">Stop</string>
     <string-array name="dog_names_array">
         <item>Bull Mastiff</item>
         <item>Doberman</item>

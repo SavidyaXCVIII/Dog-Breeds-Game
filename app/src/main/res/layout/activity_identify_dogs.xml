@@ -47,6 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:padding="10dp"
+        android:onClick="checkImageOne"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,6 +68,7 @@
             android:layout_height="200dp"
             android:layout_weight="1"
             android:padding="5dp"
+            android:onClick="checkImageTwo"
             tools:layout_editor_absoluteY="245dp" />
 
         <ImageView
@@ -74,13 +76,14 @@
             android:layout_width="0dp"
             android:layout_height="201dp"
             android:layout_weight="1"
+            android:onClick="checkImageThree"
             tools:layout_editor_absoluteX="211dp"
             tools:layout_editor_absoluteY="245dp" />
 
     </LinearLayout>
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/result"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -96,7 +99,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
     <Button
-        android:id="@+id/submit_button"
+        android:id="@+id/next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -106,7 +109,7 @@
         android:layout_marginBottom="8dp"
         android:background="@color/colorPrimary"
         android:onClick="next"
-        android:text="@string/submit"
+        android:text="next"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

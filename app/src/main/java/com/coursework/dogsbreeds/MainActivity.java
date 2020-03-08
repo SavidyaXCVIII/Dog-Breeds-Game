@@ -87,18 +87,15 @@ public class MainActivity extends AppCompatActivity {
 
     public void launchIdentifyDogActivity(View view) {
         Log.d(LOG_TAG, "Button Clicked");
-
         Intent intent = new Intent(this, IdentifyDogsActivity.class);
         intent.putExtra("Images", imagesMap);
         startActivity(intent);
-
     }
 
     public void launchSearchBreedsActivity(View view) {
         Log.d(LOG_TAG, "Button Clicked");
         Intent intent = new Intent(this, SearchDogBreedsActivity.class);
         intent.putExtra("Images", imagesMap);
-        intent.putExtra("gameDifficulty" , gameDifficulty);
         startActivity(intent);
 
     }

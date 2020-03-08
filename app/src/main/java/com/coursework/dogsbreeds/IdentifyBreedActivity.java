@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -52,7 +51,6 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
         Intent intent = getIntent();
 
-        breedName = intent.getExtras().getString("breed");
 
         gameDifficulty = intent.getExtras().getBoolean("gameDifficulty");
 
@@ -87,7 +85,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     }
 
     public String getImageName() {
-//        String imageName = null;
+        String imageName = null;
         Random random = new Random();
 
         int randKey = random.nextInt(10);
@@ -95,7 +93,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         Set<String> keys = imagesMap.keySet();
         String[] breedNamesArray = keys.toArray(new String[keys.size()]);
         breedName = breedNamesArray[randKey];
-        String[] imageNamesArray = imagesMap.get(breedNamesArray[2]);
+        String[] imageNamesArray = imagesMap.get(breedNamesArray[randKey]);
         int randValue = random.nextInt(5);
         imageName = imageNamesArray[randValue];
         System.out.println(imageName);

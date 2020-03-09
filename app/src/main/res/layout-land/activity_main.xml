@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="@drawable/background"
 
     tools:context=".MainActivity">
 
@@ -27,58 +26,32 @@
         android:id="@+id/level_identify_the_breed"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:background="@color/colorPrimary"
         android:onClick="launchIdentifyBreedActivity"
         android:padding="5dp"
-        android:textColor="@color/colorWhite"
         android:text="@string/identify_the_breed"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/header_game_of_dogs" />
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBaseline_toBaselineOf="@+id/level_identify_the_dog"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
     <Button
         android:id="@+id/level_identify_the_dog"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginTop="40dp"
         android:background="@color/colorPrimary"
         android:onClick="launchIdentifyDogActivity"
         android:padding="5dp"
         android:text="@string/identify_the_dog"
         android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/level_identify_the_breed" />
+        app:layout_constraintEnd_toStartOf="@+id/level_search_dog_breeds"
+        app:layout_constraintStart_toEndOf="@+id/level_identify_the_breed"
+        app:layout_constraintTop_toBottomOf="@+id/header_game_of_dogs" />
 
-    <Button
-        android:id="@+id/level_search_dog_breeds"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@color/colorPrimary"
-        android:onClick="launchSearchBreedsActivity"
-        android:padding="5dp"
-        android:text="@string/search_dog_breeds"
-        android:textColor="@color/colorWhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/level_identify_the_dog" />
-
-<!--    <ImageView-->
+    <!--    <ImageView-->
 <!--        android:id="@+id/bottom_game_of_dogs"-->
 <!--        android:layout_width="420dp"-->
 <!--        android:layout_height="416dp"-->
@@ -87,6 +60,21 @@
 <!--        app:layout_constraintStart_toStartOf="parent"-->
 <!--        app:layout_constraintTop_toBottomOf="@+id/level_search_dog_breeds"-->
 <!--        app:srcCompat="@drawable/background" />-->
+
+    <Button
+        android:id="@+id/level_search_dog_breeds"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:background="@color/colorPrimary"
+        android:onClick="launchSearchBreedsActivity"
+        android:padding="5dp"
+        android:text="@string/search_dog_breeds"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/header_game_of_dogs" />
 
     <Switch
         android:id="@+id/switch_difficulty_level"

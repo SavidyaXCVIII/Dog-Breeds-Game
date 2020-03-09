@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -12,19 +13,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
 public class IdentifyBreedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    private static final long TIME = 10000;
 
     private static HashMap<String, String[]> imagesMap;
 
@@ -38,7 +33,11 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
     private static String answerDescription;
 
-    private static boolean gameDifficulty;
+    private static boolean difficulty;
+
+    private static long time;
+
+    private TextView countdown;
 
     private TextView answer;
     private TextView correctAnswer;
@@ -51,10 +50,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
         Intent intent = getIntent();
 
-
-        gameDifficulty = intent.getExtras().getBoolean("gameDifficulty");
-
         imagesMap = (HashMap<String, String[]>) intent.getSerializableExtra("Images");
+        difficulty = getIntent().getExtras().getBoolean("difficulty");
 
         ImageView breedImage = findViewById(R.id.breed_image);
 
@@ -81,20 +78,56 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         answer = (TextView)findViewById(R.id.result);
         correctAnswer = (TextView)findViewById((R.id.result_correct_answer));
         submitButton = (Button)findViewById(R.id.submit_button);
+        countdown = (TextView) findViewById(R.id.countdown_level_01);
 
+        if (difficulty){
+            countdown.setVisibility(View.VISIBLE);
+            setTimer();
+        }
+        else {
+            countdown.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void disableText(){
+        countdown.setVisibility(View.INVISIBLE);
+    }
+
+    public void setTimer(){
+        new CountDownTimer(10000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                time = millisUntilFinished / 1000;
+                countdown.setText("Seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                countdown.setText("TIMED OUT!");
+                if (button.equals("Submit")){
+                    submit();
+                }
+                else {
+                    hideCountDown();
+                }
+            }
+        }.start();
+    }
+
+    public void hideCountDown(){
+        countdown.setVisibility(View.INVISIBLE);
     }
 
     public String getImageName() {
         String imageName = null;
         Random random = new Random();
 
-        int randKey = random.nextInt(10);
+        int randKey = random.nextInt(12);
 
         Set<String> keys = imagesMap.keySet();
         String[] breedNamesArray = keys.toArray(new String[keys.size()]);
         breedName = breedNamesArray[randKey];
         String[] imageNamesArray = imagesMap.get(breedNamesArray[randKey]);
-        int randValue = random.nextInt(5);
+        int randValue = random.nextInt(10);
         imageName = imageNamesArray[randValue];
         System.out.println(imageName);
 
@@ -119,7 +152,11 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     }
 
     public void checkAnswer(View view) {
+        disableText();
+        submit();
 
+    }
+    public void submit(){
         if (button.equals("Submit")) {
             button = "Next";
             submitButton.setText(button);
@@ -153,6 +190,7 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         outState.putString("breed", breedName);
         outState.putString("submit", button);
         outState.putString("description", answerDescription);
+        outState.putLong("millisUntilFinished", time);
     }
 
     @Override
@@ -160,6 +198,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         super.onRestoreInstanceState(savedInstanceState);
         imageName = savedInstanceState.getString("image", imageName);
         breedName = savedInstanceState.getString("breed", breedName);
+        time = savedInstanceState.getLong("millisUntilFinished", time);
+
 
         ImageView breedImage = findViewById(R.id.breed_image);
         int resource_id = getResources().getIdentifier(imageName, "drawable", "com.coursework.dogsbreeds");

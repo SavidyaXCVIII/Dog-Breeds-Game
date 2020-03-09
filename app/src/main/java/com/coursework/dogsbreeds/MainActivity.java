@@ -23,16 +23,18 @@ public class MainActivity extends AppCompatActivity {
     private static boolean gameDifficulty = false;
 
     public void addImages() {
-        String[] bullMastiff = new String[]{"bull1", "bull2", "bull3", "bull4", "bull5"};
-        String[] doberman = new String[]{"doberman1", "doberman2", "doberman3", "doberman4", "doberman5"};
-        String[] eskimo = new String[]{"eskimo1", "eskimo2", "eskimo3", "eskimo4", "eskimo5"};
-        String[] germanShepard = new String[]{"german1", "german2", "german3", "german4", "german5"};
-        String[] goldenRetriever = new String[]{"golden1", "golden2", "golden3", "golden4", "golden5"};
-        String[] siberianHusky = new String[]{"husky1", "husky2", "husky3", "husky4", "husky5"};
-        String[] komondor = new String[]{"komondor1", "komondor2", "komondor3", "komondor4", "komondor5"};
-        String[] labradorRetriever = new String[]{"labrador1", "labrador2", "labrador3", "labrador4", "labrador5"};
-        String[] rottweiler = new String[]{"rotweiller1", "rotweiller2", "rotweiller3", "rotweiller4", "rotweiller5"};
-        String[] saint = new String[]{"saint1", "saint2", "saint3", "saint4", "saint5"};
+        String[] bullMastiff = new String[]{"bull1", "bull2", "bull3", "bull4", "bull5","bull6","bull7","bull8","bull9","bull10"};
+        String[] doberman = new String[]{"doberman1", "doberman2", "doberman3", "doberman4", "doberman5","doberman6","doberman7","doberman8","doberman9","doberman10"};
+        String[] eskimo = new String[]{"eskimo1", "eskimo2", "eskimo3", "eskimo4", "eskimo5","eskimo6","eskimo7","eskimo8","eskimo9","eskimo10"};
+        String[] germanShepard = new String[]{"german1", "german2", "german3", "german4", "german5","german6","german7","german8","german9","german10"};
+        String[] goldenRetriever = new String[]{"golden1", "golden2", "golden3", "golden4", "golden5","golden6","golden7","golden8","golden9","golden10"};
+        String[] siberianHusky = new String[]{"husky1", "husky2", "husky3", "husky4", "husky5","husky6","husky7","husky8","husky9","husky10"};
+        String[] komondor = new String[]{"komondor1", "komondor2", "komondor3", "komondor4", "komondor5","komondor6","komondor7","komondor8","komondor9","komondor10"};
+        String[] labradorRetriever = new String[]{"labrador1", "labrador2", "labrador3", "labrador4", "labrador5","labrador6","labrador7","labrador8","labrador9","labrador10"};
+        String[] rottweiler = new String[]{"rotweiller1", "rotweiller2", "rotweiller3", "rotweiller4", "rotweiller5","rotweiller6","rotweiller7","rotweiller8","rotweiller9","rotweiller10"};
+        String[] saint = new String[]{"saint1", "saint2", "saint3", "saint4", "saint5","saint6","saint7","saint8","saint9","saint10"};
+        String[] saluki = new String[]{"saluki1", "saluki2", "saluki3", "saluki4", "saluki5","saluki6","saluki7","saluki8","saluki9","saluki10"};
+        String[] boston = new String[]{"boston1", "boston2", "boston3", "boston4", "boston5","boston6","boston7","boston8","boston9","boston10"};
 
         imagesMap.put("Bull Mastiff", bullMastiff);
         imagesMap.put("Doberman", doberman);
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         imagesMap.put("Labrador Retriever", labradorRetriever);
         imagesMap.put("Bull Rottweiler", rottweiler);
         imagesMap.put("Saint", saint);
+        imagesMap.put("Saluki", saluki);
+        imagesMap.put("Boston Bull", boston);
     }
 
     @Override
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "Button Clicked");
 
         Intent intent = new Intent(this, IdentifyBreedActivity.class);
+        intent.putExtra("difficulty", gameDifficulty);
         intent.putExtra("Images", imagesMap);
         startActivity(intent);
 
@@ -88,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
     public void launchIdentifyDogActivity(View view) {
         Log.d(LOG_TAG, "Button Clicked");
         Intent intent = new Intent(this, IdentifyDogsActivity.class);
+        intent.putExtra("difficulty", gameDifficulty);
         intent.putExtra("Images", imagesMap);
         startActivity(intent);
     }

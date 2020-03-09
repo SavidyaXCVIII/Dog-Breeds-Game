@@ -36,10 +36,10 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         />
     <TextView
         android:id="@+id/countdown_level_01"
@@ -47,11 +47,9 @@
         android:layout_height="wrap_content"
         android:text="@string/countdown"
         android:gravity="center_vertical|center_horizontal"
-        android:textSize="30sp"
+        android:textSize="10sp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
 
         />
     <TextView
@@ -61,9 +59,8 @@
         android:text="@string/result"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="10sp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:gravity="center_horizontal" />
     <TextView
@@ -73,7 +70,7 @@
         android:text="@string/result"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="10sp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -84,9 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
          />
 
     <Button
@@ -94,9 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:background="@color/colorPrimary"
         android:onClick="checkAnswer"
         android:text="@string/submit" />

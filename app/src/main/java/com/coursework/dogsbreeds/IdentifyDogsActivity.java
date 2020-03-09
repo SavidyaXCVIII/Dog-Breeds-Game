@@ -1,10 +1,13 @@
 package com.coursework.dogsbreeds;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.HashMap;
@@ -13,6 +16,8 @@ import java.util.Random;
 import java.util.Set;
 
 public class IdentifyDogsActivity extends AppCompatActivity {
+
+    private static final long TIME = 60000;
 
     private static HashMap<String, String[]> imagesMap;
 
@@ -31,6 +36,9 @@ public class IdentifyDogsActivity extends AppCompatActivity {
     private static String selectedImage;
     private TextView breed;
     private TextView result;
+    private Button submitButton;
+    private TextView countDown;
+    private static boolean difficulty;
 
 
     @Override
@@ -40,6 +48,7 @@ public class IdentifyDogsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         imagesMap = (HashMap<String, String[]>) intent.getSerializableExtra("Images");
+        difficulty = getIntent().getExtras().getBoolean("difficulty");
 
         setImages();
 
@@ -48,6 +57,10 @@ public class IdentifyDogsActivity extends AppCompatActivity {
 
         result = (TextView) findViewById(R.id.result);
 
+        submitButton = (Button) findViewById(R.id.next);
+        submitButton.setEnabled(false);
+
+        countDown = (TextView) findViewById(R.id.countdown);
 
         ImageView breedImageOne = findViewById(R.id.breed_image_1);
         int resource_id_one = getResources().getIdentifier(imageNameOne, "drawable", "com.coursework.dogsbreeds");
@@ -61,6 +74,29 @@ public class IdentifyDogsActivity extends AppCompatActivity {
         int resource_id_three = getResources().getIdentifier(imageNameThree, "drawable", "com.coursework.dogsbreeds");
         breedImageThree.setImageResource(resource_id_three);
 
+        if (difficulty){
+            countDown.setVisibility(View.VISIBLE);
+            startTimer();
+        }
+        else {
+            countDown.setVisibility(View.INVISIBLE);
+        }
+
+
+    }
+    public void startTimer(){
+        new CountDownTimer(10000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                countDown.setText("Seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                countDown.setText("TIMED OUT!");
+                submitButton.setEnabled(true);
+                disableImageClick();
+            }
+        }.start();
     }
 
     public void setImages() {
@@ -85,15 +121,12 @@ public class IdentifyDogsActivity extends AppCompatActivity {
 
         String[] imageNamesArrayOne = imagesMap.get(breedNamesArray[randomValues[0]]);
         imageNameOne = getImage(imageNamesArrayOne);
-        System.out.println(imageNameOne);
 
         String[] imageNamesArrayTwo = imagesMap.get(breedNamesArray[randomValues[1]]);
         imageNameTwo = getImage(imageNamesArrayTwo);
-        System.out.println(imageNameTwo);
 
         String[] imageNamesArrayThree = imagesMap.get(breedNamesArray[randomValues[2]]);
         imageNameThree = getImage(imageNamesArrayThree);
-        System.out.println(imageNameThree);
 
     }
 
@@ -116,24 +149,33 @@ public class IdentifyDogsActivity extends AppCompatActivity {
             result.setText(resultDescription);
         }
     }
+    public void disableText(){
+        countDown.setVisibility(View.INVISIBLE);
+    }
 
 
     public void checkImageOne(View view) {
         selectedImage = breedNameOne;
+        submitButton.setEnabled(true);
         disableImageClick();
         checkAnswer();
+        disableText();
     }
 
     public void checkImageTwo(View view) {
         selectedImage = breedNameTwo;
+        submitButton.setEnabled(true);
         disableImageClick();
         checkAnswer();
+        disableText();
     }
 
     public void checkImageThree(View view) {
         selectedImage = breedNameThree;
+        submitButton.setEnabled(true);
         disableImageClick();
         checkAnswer();
+        disableText();
     }
 
     public void disableImageClick(){
@@ -153,6 +195,42 @@ public class IdentifyDogsActivity extends AppCompatActivity {
         Intent identifyDogsBreedActivity = new Intent(this, IdentifyDogsActivity.class);
         finish();
         identifyDogsBreedActivity.putExtra("Images",imagesMap);
+        identifyDogsBreedActivity.putExtra("difficulty", difficulty);
         startActivity(identifyDogsBreedActivity);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("imageNameOne", imageNameOne);
+        outState.putString("imageNameTwo", imageNameTwo);
+        outState.putString("imageNameThree", imageNameThree);
+        outState.putString("breedName", breedName);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        imageNameOne = savedInstanceState.getString("imageNameOne", imageNameOne);
+        imageNameTwo = savedInstanceState.getString("imageNameTwo", imageNameTwo);
+        imageNameThree = savedInstanceState.getString("imageNameThree", imageNameThree);
+        breedName = savedInstanceState.getString("breedName", breedName);
+
+        ImageView breedImageOne = findViewById(R.id.breed_image_1);
+        int resource_id_one = getResources().getIdentifier(imageNameOne, "drawable", "com.coursework.dogsbreeds");
+        breedImageOne.setImageResource(resource_id_one);
+
+        ImageView breedImageTwo = findViewById(R.id.breed_image_2);
+        int resource_id_two = getResources().getIdentifier(imageNameTwo, "drawable", "com.coursework.dogsbreeds");
+        breedImageTwo.setImageResource(resource_id_two);
+
+        ImageView breedImageThree = findViewById(R.id.breed_image_3);
+        int resource_id_three = getResources().getIdentifier(imageNameThree, "drawable", "com.coursework.dogsbreeds");
+        breedImageThree.setImageResource(resource_id_three);
+
+        breed = (TextView) findViewById(R.id.breed_name);
+        breed.setText(breedName);
+
     }
 }

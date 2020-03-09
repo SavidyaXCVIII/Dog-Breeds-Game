@@ -7,7 +7,7 @@
     <string name="difficulty_level">Change Difficulty </string>
     <string name="show_difficulty_description">You have chosen Beginner Level</string>
     <string name="level_one_description">Identify the Breed</string>
-    <string name="select_breed">Select the breed of the dog shown in the image below.</string>
+    <string name="select_breed">Select the dog breed shown in the image below.</string>
     <string name="submit">Submit</string>
     <string name="result"></string>
 
@@ -19,6 +19,7 @@
     <string name="breeds">Breeds</string>
     <string name="text_submit">Submit</string>
     <string name="text_stop">Stop</string>
+    <string name="countdown">10</string>
     <string-array name="dog_names_array">
         <item>Bull Mastiff</item>
         <item>Doberman</item>
@@ -30,6 +31,8 @@
         <item>Labrador Retriever</item>
         <item>Bull Rottweiler</item>
         <item>Saint</item>
+        <item>Saluki</item>
+        <item>Boston Bull</item>
     </string-array>
 
 </resources>

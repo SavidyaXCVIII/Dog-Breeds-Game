@@ -13,11 +13,15 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 
 public class IdentifyBreedActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    private static ArrayList<String> usedArray = new ArrayList<>();
 
     private static final long TIME = 10000;
 
@@ -36,6 +40,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     private static boolean difficulty;
 
     private static long time;
+
+    private static CountDownTimer countDownTimer;
 
     private TextView countdown;
 
@@ -93,8 +99,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         countdown.setVisibility(View.INVISIBLE);
     }
 
-    public void setTimer(){
-        new CountDownTimer(10000, 1000) {
+    public final void setTimer(){
+        countDownTimer = new CountDownTimer(10000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 time = millisUntilFinished / 1000;
@@ -112,6 +118,28 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
             }
         }.start();
     }
+    public final void setTimerAfter(long future){
+        countDownTimer = new CountDownTimer(future, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                countdown.setText("Seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                countdown.setText("TIMED OUT!");
+                if (button.equals("Submit")){
+                    submit();
+                }
+                else {
+                    hideCountDown();
+                }
+            }
+        }.start();
+    }
+
+
+
+
 
     public void hideCountDown(){
         countdown.setVisibility(View.INVISIBLE);
@@ -121,15 +149,19 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         String imageName = null;
         Random random = new Random();
 
-        int randKey = random.nextInt(12);
+        do {
+            int randKey = random.nextInt(12);
 
-        Set<String> keys = imagesMap.keySet();
-        String[] breedNamesArray = keys.toArray(new String[keys.size()]);
-        breedName = breedNamesArray[randKey];
-        String[] imageNamesArray = imagesMap.get(breedNamesArray[randKey]);
-        int randValue = random.nextInt(10);
-        imageName = imageNamesArray[randValue];
-        System.out.println(imageName);
+            Set<String> keys = imagesMap.keySet();
+            String[] breedNamesArray = keys.toArray(new String[keys.size()]);
+            breedName = breedNamesArray[randKey];
+            String[] imageNamesArray = imagesMap.get(breedNamesArray[randKey]);
+            int randValue = random.nextInt(10);
+            imageName = imageNamesArray[randValue];
+
+        } while (usedArray.contains(imageName));
+
+        usedArray.add(imageName);
 
         return imageName;
     }
@@ -152,6 +184,21 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     public void checkAnswer(View view) {
         disableText();
         submit();
+
+    }
+
+    public void check(){
+        if (spinnerLabel.equals(breedName)) {
+            answerDescription = "Your answer is CORRECT!";
+            answer.setTextColor(this.getResources().getColor(R.color.ColorGreen));
+        }
+        else {
+            answerDescription = "Your answer is WRONG";
+            answer.setTextColor(this.getResources().getColor(R.color.ColorRed));
+            correctAnswer.setTextColor(this.getResources().getColor(R.color.colorBlue));
+            correctAnswer.setText("Answer: " + breedName);
+        }
+        answer.setText(answerDescription);
 
     }
     public void submit(){
@@ -189,20 +236,45 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         outState.putString("submit", button);
         outState.putString("description", answerDescription);
         outState.putLong("millisUntilFinished", time);
+
     }
+
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         imageName = savedInstanceState.getString("image", imageName);
         breedName = savedInstanceState.getString("breed", breedName);
+        long timeAfter = savedInstanceState.getLong("millisUntilFinished",time);
+        button = savedInstanceState.getString("submit", button);
+        System.out.println(button);
+        answerDescription = savedInstanceState.getString("description", answerDescription);
+
+        timeAfter = timeAfter * 1000;
+
+        new CountDownTimer(timeAfter, 1000) {
+
+
+            public void onTick(long millisUntilFinished) {
+                countdown.setText("Seconds remaining: " + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+                countdown.setText("TIMED OUT!");
+                check();
+
+            }
+        }.start();
+
+        countDownTimer.cancel();
+
+
+        answer.setTextColor(this.getResources().getColor(R.color.ColorRed));
+        correctAnswer.setTextColor(this.getResources().getColor(R.color.colorBlue));
 
         ImageView breedImage = findViewById(R.id.breed_image);
         int resource_id = getResources().getIdentifier(imageName, "drawable", "com.coursework.dogsbreeds");
         breedImage.setImageResource(resource_id);
-
-        button = savedInstanceState.getString("submit", button);
-        answerDescription = savedInstanceState.getString("description", answerDescription);
 
         System.out.println(button);
 
@@ -218,9 +290,6 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
                 correctAnswer.setTextColor(this.getResources().getColor(R.color.colorBlue));
                 correctAnswer.setText("Answer: " + breedName);
             }
-        }
-        else {
-
         }
 
     }

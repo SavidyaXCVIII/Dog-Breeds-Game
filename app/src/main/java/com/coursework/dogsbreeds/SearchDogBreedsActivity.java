@@ -1,5 +1,6 @@
 package com.coursework.dogsbreeds;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -10,7 +11,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.Spinner;
 
 import java.util.HashMap;
 import java.util.Random;
@@ -28,7 +28,7 @@ public class SearchDogBreedsActivity extends AppCompatActivity {
 
     private AutoCompleteTextView autoCompleteTextView;
 
-    private static String[] breeds;
+    private static String[] breeds = null;
 
     private static boolean stopped = false;
 
@@ -37,6 +37,8 @@ public class SearchDogBreedsActivity extends AppCompatActivity {
     private static Integer[] imageId = null;
 
     private static int count = 0;
+
+    private static String breedName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,13 +63,23 @@ public class SearchDogBreedsActivity extends AppCompatActivity {
     }
 
     public void submit(View view) {
-        Random random = new Random();
+
         stopped = false;
         String name = getText();
+
         System.out.println(name);
+
+        startSlideShow(name);
+
+
+    }
+
+    public void startSlideShow(String name){
+        Random random = new Random();
         String[] imageNamesArray = imagesMap.get(name);
 
         if (imageNamesArray != null){
+            breedName = name;
             for (int i = 0; i < imageNamesArray.length; i++) {
                 int randomPosition = random.nextInt(imageNamesArray.length);
                 String temp = imageNamesArray[i];
@@ -87,16 +99,18 @@ public class SearchDogBreedsActivity extends AppCompatActivity {
             viewPager.setAdapter(viewPageAdapter);
 
             timer = new Timer();
+
             timer.scheduleAtFixedRate(new SlideTimer(), 5000,5000);
 
             disableSubmitButtonClick(false);
+            stopped = false;
         }
-
     }
 
     public void disableSubmitButtonClick(boolean value){
         Button submitButton = (Button) findViewById(R.id.submit_button);
         submitButton.setEnabled(value);
+        autoCompleteTextView.setEnabled(value);
     }
 
     public void disableStopButtonClick(boolean value){
@@ -110,8 +124,30 @@ public class SearchDogBreedsActivity extends AppCompatActivity {
         if (timer != null){
             timer.cancel();
         }
+        count = 0;
         disableSubmitButtonClick(true);
     }
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.getInt("count" , count);
+        outState.getString("name", breedName);
+        outState.getBoolean("stopped", stopped);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        count = savedInstanceState.getInt("count", count);
+        breedName = savedInstanceState.getString("name" , breedName);
+        stopped= savedInstanceState.getBoolean("stopped" ,stopped);
+        count = 0;
+        if (!stopped){
+            startSlideShow(breedName);
+        }
+
+    }
+
 
     public class SlideTimer extends TimerTask{
 

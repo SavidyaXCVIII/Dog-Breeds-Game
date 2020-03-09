@@ -19,8 +19,6 @@ import java.util.Set;
 
 public class IdentifyDogsActivity extends AppCompatActivity {
 
-    private static final long TIME = 60000;
-
     private static HashMap<String, String[]> imagesMap;
 
     private static ArrayList<String> usedArray = new ArrayList<>();
@@ -34,9 +32,6 @@ public class IdentifyDogsActivity extends AppCompatActivity {
     private static String imageNameOne;
     private static String imageNameTwo;
     private static String imageNameThree;
-    private ImageView imageViewOne;
-    private ImageView imageViewTwo;
-    private ImageView imageViewThree;
     private static String selectedImage;
     private TextView breed;
     private TextView result;
@@ -78,17 +73,17 @@ public class IdentifyDogsActivity extends AppCompatActivity {
         int resource_id_three = getResources().getIdentifier(imageNameThree, "drawable", "com.coursework.dogsbreeds");
         breedImageThree.setImageResource(resource_id_three);
 
-        if (difficulty){
+        if (difficulty) {
             countDown.setVisibility(View.VISIBLE);
             startTimer();
-        }
-        else {
+        } else {
             countDown.setVisibility(View.INVISIBLE);
         }
 
 
     }
-    public void startTimer(){
+
+    public void startTimer() {
         new CountDownTimer(10000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -107,7 +102,7 @@ public class IdentifyDogsActivity extends AppCompatActivity {
         Set<Integer> randomSet = new HashSet<>();
 
         while (randomSet.size() < 3) {
-            int randomKey = random.nextInt(10);
+            int randomKey = random.nextInt(12);
             randomSet.add(randomKey);
         }
 
@@ -137,34 +132,34 @@ public class IdentifyDogsActivity extends AppCompatActivity {
     public String getImage(String[] imagesArray) {
         String imageName = null;
 
-        do{
-            int randValueOne = random.nextInt(5);
+        do {
+            int randValueOne = random.nextInt(10);
             imageName = imagesArray[randValueOne];
 
-        }while (usedArray.contains(imageName));
+        } while (usedArray.contains(imageName));
 
-        for (String element :
-                usedArray) {
-            System.out.println("element " + element);
-        }
-        System.out.println("image Name " + imageName);
+//        for (String element :
+//                usedArray) {
+//            System.out.println("element " + element);
+//        }
+//        System.out.println("image Name " + imageName);
 
-        usedArray.add(imageName);
+
         return imageName;
     }
 
-    public void checkAnswer(){
+    public void checkAnswer() {
         String resultDescription = null;
-        if (selectedImage.equals(breedName)){
+        if (selectedImage.equals(breedName)) {
             resultDescription = "CORRECT";
             result.setText(resultDescription);
-        }
-        else{
+        } else {
             resultDescription = "WRONG";
             result.setText(resultDescription);
         }
     }
-    public void disableText(){
+
+    public void disableText() {
         countDown.setVisibility(View.INVISIBLE);
     }
 
@@ -193,7 +188,7 @@ public class IdentifyDogsActivity extends AppCompatActivity {
         disableText();
     }
 
-    public void disableImageClick(){
+    public void disableImageClick() {
         ImageView breedImageOne = findViewById(R.id.breed_image_1);
         breedImageOne.setEnabled(false);
         ImageView breedImageTwo = findViewById(R.id.breed_image_2);
@@ -206,10 +201,10 @@ public class IdentifyDogsActivity extends AppCompatActivity {
         restartActivity();
     }
 
-    public void restartActivity(){
+    public void restartActivity() {
         Intent identifyDogsBreedActivity = new Intent(this, IdentifyDogsActivity.class);
         finish();
-        identifyDogsBreedActivity.putExtra("Images",imagesMap);
+        identifyDogsBreedActivity.putExtra("Images", imagesMap);
         identifyDogsBreedActivity.putExtra("difficulty", difficulty);
         startActivity(identifyDogsBreedActivity);
     }
@@ -223,6 +218,7 @@ public class IdentifyDogsActivity extends AppCompatActivity {
         outState.putString("breedName", breedName);
         outState.putString("selectedImage", selectedImage);
 
+
     }
 
     @Override
@@ -233,6 +229,7 @@ public class IdentifyDogsActivity extends AppCompatActivity {
         imageNameThree = savedInstanceState.getString("imageNameThree", imageNameThree);
         breedName = savedInstanceState.getString("breedName", breedName);
         selectedImage = savedInstanceState.getString("selectedName", selectedImage);
+
 
         ImageView breedImageOne = findViewById(R.id.breed_image_1);
         int resource_id_one = getResources().getIdentifier(imageNameOne, "drawable", "com.coursework.dogsbreeds");
@@ -254,8 +251,7 @@ public class IdentifyDogsActivity extends AppCompatActivity {
             disableImageClick();
             checkAnswer();
             disableText();
-        }
-        else {
+        } else {
             submitButton.setEnabled(false);
         }
 

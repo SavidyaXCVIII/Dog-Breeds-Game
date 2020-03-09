@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Random;
@@ -20,6 +22,8 @@ public class IdentifyDogsActivity extends AppCompatActivity {
     private static final long TIME = 60000;
 
     private static HashMap<String, String[]> imagesMap;
+
+    private static ArrayList<String> usedArray = new ArrayList<>();
 
     private static Random random = new Random();
 
@@ -133,8 +137,19 @@ public class IdentifyDogsActivity extends AppCompatActivity {
     public String getImage(String[] imagesArray) {
         String imageName = null;
 
-        int randValueOne = random.nextInt(5);
-        imageName = imagesArray[randValueOne];
+        do{
+            int randValueOne = random.nextInt(5);
+            imageName = imagesArray[randValueOne];
+
+        }while (usedArray.contains(imageName));
+
+        for (String element :
+                usedArray) {
+            System.out.println("element " + element);
+        }
+        System.out.println("image Name " + imageName);
+
+        usedArray.add(imageName);
         return imageName;
     }
 
@@ -206,6 +221,7 @@ public class IdentifyDogsActivity extends AppCompatActivity {
         outState.putString("imageNameTwo", imageNameTwo);
         outState.putString("imageNameThree", imageNameThree);
         outState.putString("breedName", breedName);
+        outState.putString("selectedImage", selectedImage);
 
     }
 
@@ -216,6 +232,7 @@ public class IdentifyDogsActivity extends AppCompatActivity {
         imageNameTwo = savedInstanceState.getString("imageNameTwo", imageNameTwo);
         imageNameThree = savedInstanceState.getString("imageNameThree", imageNameThree);
         breedName = savedInstanceState.getString("breedName", breedName);
+        selectedImage = savedInstanceState.getString("selectedName", selectedImage);
 
         ImageView breedImageOne = findViewById(R.id.breed_image_1);
         int resource_id_one = getResources().getIdentifier(imageNameOne, "drawable", "com.coursework.dogsbreeds");
@@ -231,6 +248,16 @@ public class IdentifyDogsActivity extends AppCompatActivity {
 
         breed = (TextView) findViewById(R.id.breed_name);
         breed.setText(breedName);
+
+        if (selectedImage != null) {
+            submitButton.setEnabled(true);
+            disableImageClick();
+            checkAnswer();
+            disableText();
+        }
+        else {
+            submitButton.setEnabled(false);
+        }
 
     }
 }

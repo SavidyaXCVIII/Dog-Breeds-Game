@@ -137,12 +137,10 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         spinnerLabel = parent.getItemAtPosition(position).toString();
-
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-
     }
 
     public void restartActivity(){
@@ -198,8 +196,6 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
         super.onRestoreInstanceState(savedInstanceState);
         imageName = savedInstanceState.getString("image", imageName);
         breedName = savedInstanceState.getString("breed", breedName);
-        time = savedInstanceState.getLong("millisUntilFinished", time);
-
 
         ImageView breedImage = findViewById(R.id.breed_image);
         int resource_id = getResources().getIdentifier(imageName, "drawable", "com.coursework.dogsbreeds");
@@ -207,6 +203,8 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
 
         button = savedInstanceState.getString("submit", button);
         answerDescription = savedInstanceState.getString("description", answerDescription);
+
+        System.out.println(button);
 
         if (button.equals("Next")){
             submitButton.setText(button);
@@ -220,6 +218,9 @@ public class IdentifyBreedActivity extends AppCompatActivity implements AdapterV
                 correctAnswer.setTextColor(this.getResources().getColor(R.color.colorBlue));
                 correctAnswer.setText("Answer: " + breedName);
             }
+        }
+        else {
+
         }
 
     }

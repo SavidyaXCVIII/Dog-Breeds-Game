@@ -20,7 +20,7 @@
     <string name="text_submit">Submit</string>
     <string name="text_stop">Stop</string>
     <string name="countdown">10</string>
-    <string-array name="dog_names_array">
+    <string-array name="dog_names_array" >
         <item>Bull Mastiff</item>
         <item>Doberman</item>
         <item>Eskimo</item>

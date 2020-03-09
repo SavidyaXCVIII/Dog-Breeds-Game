@@ -10,9 +10,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Spinner;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
@@ -65,6 +64,7 @@ public class SearchDogBreedsActivity extends AppCompatActivity {
         Random random = new Random();
         stopped = false;
         String name = getText();
+        System.out.println(name);
         String[] imageNamesArray = imagesMap.get(name);
 
         if (imageNamesArray != null){
@@ -117,7 +117,6 @@ public class SearchDogBreedsActivity extends AppCompatActivity {
 
         @Override
         public void run() {
-
             SearchDogBreedsActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -130,13 +129,12 @@ public class SearchDogBreedsActivity extends AppCompatActivity {
                             if (viewPager.getCurrentItem() == count){
                                 viewPager.setCurrentItem(count + 1);
                             }
-                            count++;
+
                         }
                     }
-
+                    count++;
                 }
             });
-
         }
     }
 }

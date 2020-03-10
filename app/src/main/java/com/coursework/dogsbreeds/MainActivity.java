@@ -7,12 +7,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
+
+
 
     private TextView difficulty;
 
@@ -22,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static boolean gameDifficulty = false;
 
+//    adding all the images in drawable into hashmap
     public void addImages() {
         String[] bullMastiff = new String[]{"bull1", "bull2", "bull3", "bull4", "bull5","bull6","bull7","bull8","bull9","bull10"};
         String[] doberman = new String[]{"doberman1", "doberman2", "doberman3", "doberman4", "doberman5","doberman6","doberman7","doberman8","doberman9","doberman10"};
@@ -55,10 +60,50 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.i(LOG_TAG, "OnCreate");
+
 //        get difficulty text view
         difficulty = (TextView) findViewById(R.id.difficulty_description);
 
         addImages();
+    }
+//    activity life cycle
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.i(LOG_TAG, "OnStart");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i(LOG_TAG, "OnResume");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i(LOG_TAG, "OnPause");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.i(LOG_TAG, "OnStop");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i(LOG_TAG, "OnRestart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i(LOG_TAG, "OnDestroy");
+        Toast.makeText(this, "Application ", Toast.LENGTH_SHORT).show();
     }
 
     //change difficulty level
@@ -80,8 +125,9 @@ public class MainActivity extends AppCompatActivity {
         difficulty.setText(difficulty_level);
     }
 
+//    launching the level 01 activity
     public void launchIdentifyBreedActivity(View view) {
-        Log.d(LOG_TAG, "Button Clicked");
+        Log.d(LOG_TAG, "Launch Identify Breed Activity");
 
         Intent intent = new Intent(this, IdentifyBreedActivity.class);
         intent.putExtra("difficulty", gameDifficulty);
@@ -90,16 +136,18 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+//    launching the level 02 activity
     public void launchIdentifyDogActivity(View view) {
-        Log.d(LOG_TAG, "Button Clicked");
+        Log.d(LOG_TAG, "Launch Identify Dog Activity");
         Intent intent = new Intent(this, IdentifyDogsActivity.class);
         intent.putExtra("difficulty", gameDifficulty);
         intent.putExtra("Images", imagesMap);
         startActivity(intent);
     }
 
+//    launching the level 03 activity
     public void launchSearchBreedsActivity(View view) {
-        Log.d(LOG_TAG, "Button Clicked");
+        Log.d(LOG_TAG, "Launch Search Breeds Activity");
         Intent intent = new Intent(this, SearchDogBreedsActivity.class);
         intent.putExtra("Images", imagesMap);
         startActivity(intent);
